@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ChefHat, Calendar, Users, Package, Star } from "lucide-react"
 import { StatsCards } from "./components/stats-cards"
-import { OrdersTable } from "./components/orders-table"
+// import { OrdersTable } from "./components/orders-table"
 import { ReservationsTable } from "./components/reservations-table"
 import { getDashboardStats, getRecentOrders, getUpcomingReservations } from "./actions"
 
@@ -40,7 +40,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <Suspense fallback={<div className="text-slate-300">Loading orders...</div>}>
-                <OrdersTable orders={recentOrders} />
+                {/* <OrdersTable orders={recentOrders} /> */}
               </Suspense>
             </CardContent>
           </Card>
