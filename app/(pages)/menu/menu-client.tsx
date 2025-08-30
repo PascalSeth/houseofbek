@@ -124,10 +124,10 @@ export default function MenuClient({ menuItems, categories }: MenuClientProps) {
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
         {/* Professional Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-sm border border-purple-400/30 rounded-full px-4 py-2 mb-6">
+          {/* <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-sm border border-purple-400/30 rounded-full px-4 py-2 mb-6">
             <ChefHat className="w-4 h-4 text-purple-300" />
             <span className="text-purple-200 text-sm font-medium">Fine Dining Experience</span>
-          </div>
+          </div> */}
           
           <h1 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
             Our
