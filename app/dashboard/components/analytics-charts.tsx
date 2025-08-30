@@ -27,6 +27,11 @@ export function AnalyticsCharts({ analytics }: AnalyticsChartsProps) {
   const formatCurrency = (value: number) => `$${value.toLocaleString()}`
   const formatNumber = (value: number) => value.toLocaleString()
 
+  // Custom formatter functions for tooltips
+  const revenueFormatter = (value: any, name: any) => [formatCurrency(Number(value)), "Revenue"]
+  const ordersFormatter = (value: any, name: any) => [formatNumber(Number(value)), "Orders"]
+  const categoryRevenueFormatter = (value: any, name: any) => [formatCurrency(Number(value)), "Revenue"]
+
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       {/* Revenue Trend Chart */}
@@ -49,7 +54,7 @@ export function AnalyticsCharts({ analytics }: AnalyticsChartsProps) {
                     borderRadius: "8px",
                     color: "#f1f5f9",
                   }}
-                  formatter={[formatCurrency, "Revenue"]}
+                  formatter={revenueFormatter}
                 />
                 <Line
                   type="monotone"
@@ -85,7 +90,7 @@ export function AnalyticsCharts({ analytics }: AnalyticsChartsProps) {
                     borderRadius: "8px",
                     color: "#f1f5f9",
                   }}
-                  formatter={[formatNumber, "Orders"]}
+                  formatter={ordersFormatter}
                 />
                 <Bar dataKey="orders" fill="#06b6d4" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -155,7 +160,7 @@ export function AnalyticsCharts({ analytics }: AnalyticsChartsProps) {
                       borderRadius: "8px",
                       color: "#f1f5f9",
                     }}
-                    formatter={[formatCurrency, "Revenue"]}
+                    formatter={categoryRevenueFormatter}
                   />
                   <Bar dataKey="revenue" fill="#10b981" radius={[0, 4, 4, 0]} />
                 </BarChart>
