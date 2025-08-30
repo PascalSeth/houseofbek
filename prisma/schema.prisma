@@ -1,0 +1,214 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  phone     String?
+  role      UserRole @default(CUSTOMER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  orders       Order[]
+  reservations Reservation[]
+  reviews      Review[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  sortOrder   Int    @default(0)
+
+  // Relations
+  menuItems MenuItem[]
+
+  @@map("categories")
+}
+
+model MenuItem {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal @db.Decimal(10, 2)
+  imageUrl    String?
+  available   Boolean @default(true)
+  categoryId  String
+  preparationTime Int?    // in minutes
+
+  // Relations
+  category   Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+
+  @@map("menu_items")
+}
+
+model Table {
+  id           String @id @default(cuid())
+  number       Int    @unique
+  capacity     Int
+  location     String? // e.g., "Main Dining", "Patio", "Private Room"
+  available    Boolean @default(true)
+
+  // Relations
+  reservations Reservation[]
+
+  @@map("tables")
+}
+
+model Reservation {
+  id           String            @id @default(cuid())
+  userId       String
+  tableId      String
+  date         DateTime
+  time         DateTime
+  partySize    Int
+  status       ReservationStatus @default(PENDING)
+  specialNotes String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  table Table @relation(fields: [tableId], references: [id], onDelete: Cascade)
+
+  @@map("reservations")
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  userId       String
+  orderNumber  String      @unique
+  status       OrderStatus @default(PENDING)
+  orderType    OrderType   @default(PICKUP)
+  totalAmount  Decimal     @db.Decimal(10, 2)
+  pickupTime   DateTime?
+  specialNotes String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  orderId    String
+  menuItemId String
+  quantity   Int
+  price      Decimal @db.Decimal(10, 2)
+  notes      String?
+
+  // Relations
+  order    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@map("order_items")
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  date        DateTime
+  startTime   DateTime
+  endTime     DateTime
+  capacity    Int
+  price       Decimal?  @db.Decimal(10, 2)
+  imageUrl    String?
+  available   Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  bookings EventBooking[]
+
+  @@map("events")
+}
+
+model EventBooking {
+  id           String              @id @default(cuid())
+  eventId      String
+  customerName String
+  customerEmail String
+  customerPhone String?
+  partySize    Int
+  status       EventBookingStatus  @default(PENDING)
+  totalAmount  Decimal?            @db.Decimal(10, 2)
+  specialNotes String?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  // Relations
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@map("event_bookings")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  rating    Int      @db.SmallInt // 1-5 stars
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+// Enums
+enum UserRole {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  SEATED
+  COMPLETED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum OrderType {
+  PICKUP
+  DELIVERY
+  DINE_IN
+}
+
+enum EventBookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
