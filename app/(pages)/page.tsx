@@ -1,99 +1,11 @@
 "use client"
 
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment, Text, Html, Float, Sphere, Box } from "@react-three/drei"
 import { Suspense, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChefHat, Calendar, Sparkles, ArrowRight, Phone, MapPin } from "lucide-react"
+import { ChefHat, Calendar, Sparkles, ArrowRight, Phone, MapPin, Heart, Users, Clock } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-
-// 3D Restaurant Interior Component
-// function RestaurantScene() {
-//   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
-
-//   return (
-//     <>
-//       <Environment preset="sunset" />
-//       <ambientLight intensity={0.5} />
-//       <pointLight position={[10, 10, 10]} intensity={1} />
-
-//       {/* Floating Food Items */}
-//       <Float speed={1.5} rotationIntensity={1} floatIntensity={2}>
-//         <Box
-//           position={[-3, 2, 0]}
-//           args={[1, 1, 1]}
-//           onPointerEnter={() => setHoveredItem("dish1")}
-//           onPointerLeave={() => setHoveredItem(null)}
-//         >
-//           <meshStandardMaterial
-//             color={hoveredItem === "dish1" ? "#8b5cf6" : "#f97316"}
-//             emissive={hoveredItem === "dish1" ? "#8b5cf6" : "#000000"}
-//             emissiveIntensity={hoveredItem === "dish1" ? 0.3 : 0}
-//           />
-//           <Html position={[0, 1.5, 0]} center>
-//             <div className="bg-card/90 backdrop-blur-sm rounded-lg p-2 text-xs font-semibold text-card-foreground border border-slate-700">
-//               Signature Dish
-//             </div>
-//           </Html>
-//         </Box>
-//       </Float>
-
-//       <Float speed={2} rotationIntensity={1.5} floatIntensity={1.5}>
-//         <Sphere
-//           position={[3, 1, -2]}
-//           args={[0.8]}
-//           onPointerEnter={() => setHoveredItem("dish2")}
-//           onPointerLeave={() => setHoveredItem(null)}
-//         >
-//           <meshStandardMaterial
-//             color={hoveredItem === "dish2" ? "#8b5cf6" : "#ea580c"}
-//             emissive={hoveredItem === "dish2" ? "#8b5cf6" : "#000000"}
-//             emissiveIntensity={hoveredItem === "dish2" ? 0.3 : 0}
-//           />
-//           <Html position={[0, 1.2, 0]} center>
-//             <div className="bg-card/90 backdrop-blur-sm rounded-lg p-2 text-xs font-semibold text-card-foreground border border-slate-700">
-//               Chef's Special
-//             </div>
-//           </Html>
-//         </Sphere>
-//       </Float>
-
-//       <Float speed={1.8} rotationIntensity={0.8} floatIntensity={2.5}>
-//         <Box
-//           position={[0, -1, 2]}
-//           args={[1.2, 0.3, 1.2]}
-//           onPointerEnter={() => setHoveredItem("table")}
-//           onPointerLeave={() => setHoveredItem(null)}
-//         >
-//           <meshStandardMaterial
-//             color={hoveredItem === "table" ? "#8b5cf6" : "#1f2937"}
-//             emissive={hoveredItem === "table" ? "#8b5cf6" : "#000000"}
-//             emissiveIntensity={hoveredItem === "table" ? 0.2 : 0}
-//           />
-//           <Html position={[0, 0.5, 0]} center>
-//             <div className="bg-card/90 backdrop-blur-sm rounded-lg p-2 text-xs font-semibold text-card-foreground border border-slate-700">
-//               Reserve Table
-//             </div>
-//           </Html>
-//         </Box>
-//       </Float>
-
-//       {/* Floating Text */}
-//       <Text
-//         position={[0, 4, -3]}
-//         fontSize={1.5}
-//         color="#8b5cf6"
-//         anchorX="center"
-//         anchorY="middle"
-//         font="/fonts/Geist-Bold.ttf"
-//       >
-//         House of Bek
-//       </Text>
-//     </>
-//   )
-// }
 
 // Hero Section Component
 function HeroSection() {
@@ -108,23 +20,6 @@ function HeroSection() {
           priority
         />
       </div>
-
-      {/* 3D Canvas Background - Hidden on mobile for performance */}
-      {/* <div className="absolute inset-0 hidden lg:block">
-        <Canvas camera={{ position: [0, 2, 10], fov: 60 }} style={{ background: "transparent" }}>
-          <Suspense fallback={null}>
-            <RestaurantScene />
-            <OrbitControls
-              enableZoom={false}
-              enablePan={false}
-              autoRotate={true}
-              autoRotateSpeed={0.5}
-              maxPolarAngle={Math.PI / 2}
-              minPolarAngle={Math.PI / 4}
-            />
-          </Suspense>
-        </Canvas>
-      </div> */}
 
       {/* Overlay Content */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-transparent to-slate-900/80">
@@ -145,13 +40,13 @@ function HeroSection() {
                   Order Pickup <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
-              <Link href="/reservations" className="w-full sm:w-auto">
+              <Link href="/menu" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
                   className="border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white bg-transparent w-full sm:w-auto"
                 >
-                  Make Reservation
+                  Check Our Menu
                 </Button>
               </Link>
             </div>
@@ -164,40 +59,40 @@ function HeroSection() {
 
 // Services Preview Section
 function ServicesPreview() {
-  const services = [
-    {
-      title: "Pickup Orders",
-      description: "Interactive menu with real-time customization",
-      icon: ChefHat,
-      color: "from-orange-500 to-red-500",
-      href: "/pickup",
-      image: "/chef-cooking-action.png",
-    },
-    {
-      title: "Table Reservations",
-      description: "Dynamic booking with live availability",
-      icon: Calendar,
-      color: "from-purple-500 to-pink-500",
-      href: "/reservations",
-      image: "/fine-dining-table-setup.png",
-    },
-    {
-      title: "Special Events",
-      description: "Immersive event planning and booking",
-      icon: Sparkles,
-      color: "from-blue-500 to-cyan-500",
-      href: "/events",
-      image: "/private-dining-room.png",
-    },
-  ]
+const services = [
+  {
+    title: "Our Menu",
+    description: "Explore our authentic dishes made with traditional recipes",
+    icon: Heart,
+    color: "from-orange-500 to-red-500",
+    href: "/menu",
+    image: "/chef-cooking-action.png",
+  },
+  {
+    title: "Event Catering",
+    description: "Let us cater your special occasions with our signature dishes",
+    icon: Users,
+    color: "from-purple-500 to-pink-500",
+    href: "/events",
+    image: "/private-dining-room.png",
+  },
+  {
+    title: "Order for Pickup",
+    description: "Fresh meals ready when you are - order ahead for convenience",
+    icon: Clock,
+    color: "from-blue-500 to-cyan-500",
+    href: "/pickup",
+    image: "https://i.pinimg.com/1200x/15/65/f5/1565f5d18e7034fb126863659ffa6370.jpg",
+  },
+]
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 bg-gradient-to-b from-slate-900 to-slate-800">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">Our Services</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">Our Philosophy</h2>
           <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto px-4">
-            Discover a new dimension of dining with our cutting-edge interactive platform
+            Every dish tells a story of tradition, love, and the warmth of home cooking
           </p>
         </div>
 
@@ -235,86 +130,70 @@ function ServicesPreview() {
   )
 }
 
-function RestaurantShowcase() {
+// Story Section
+function OurStorySection() {
+  const highlights = [
+    {
+      title: "Family Recipes",
+      description: "Time-tested recipes from our family kitchen to yours",
+      image: "https://i.pinimg.com/736x/1c/77/a3/1c77a3981fa378caeb0f212bb4e80c7d.jpg"
+    },
+    {
+      title: "Fresh Ingredients",
+      description: "Locally sourced, organic ingredients selected daily",
+      image: "https://i.pinimg.com/1200x/b2/0a/fb/b20afb6b53abe182112d8f26dbb4d415.jpg"
+    },
+    {
+      title: "Made with Love",
+      description: "Every meal prepared with the care you'd give your own family",
+      image: "https://i.pinimg.com/1200x/c3/f8/b4/c3f8b4369dee96b85dfdef9a52cfc6d5.jpg"
+    },
+    {
+      title: "Comfort Food",
+      description: "Hearty, satisfying dishes that warm the soul",
+      image: "https://i.pinimg.com/1200x/e9/cc/76/e9cc766d5aec2888addf7e5a461dbb53.jpg"
+    }
+  ]
+
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 bg-gradient-to-b from-slate-800 to-slate-900">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">Experience Our Space</h2>
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto px-4">
-            From our artisan kitchen to our elegant dining areas, every corner tells a story
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">Our Story</h2>
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto px-4">
+            House of Bek began in our family kitchen, where generations of recipes were perfected and shared. 
+            Today, we bring that same love and tradition to your table, one home-cooked meal at a time.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden group">
-            <Image
-              src="/restaurant-bar-area.png"
-              alt="Restaurant bar area"
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white">
-              <h3 className="text-base sm:text-lg font-bold">Craft Bar</h3>
-              <p className="text-xs sm:text-sm opacity-90">Artisan cocktails & fine wines</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-12">
+          {highlights.map((highlight, index) => (
+            <div key={index} className="relative group">
+              <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden">
+                <Image
+                  src={highlight.image}
+                  alt={highlight.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2">{highlight.title}</h3>
+                  <p className="text-sm sm:text-base opacity-90">{highlight.description}</p>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden group">
-            <Image
-              src="/outdoor-dining-patio.png"
-              alt="Outdoor dining patio"
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white">
-              <h3 className="text-base sm:text-lg font-bold">Garden Terrace</h3>
-              <p className="text-xs sm:text-sm opacity-90">Al fresco dining experience</p>
-            </div>
-          </div>
-
-          <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden group sm:col-span-2 lg:col-span-1">
-            <Image
-              src="/artisan-pizza-oven.png"
-              alt="Artisan pizza oven"
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white">
-              <h3 className="text-base sm:text-lg font-bold">Open Kitchen</h3>
-              <p className="text-xs sm:text-sm opacity-90">Watch our chefs create magic</p>
-            </div>
-          </div>
-
-          <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden group sm:col-span-2">
-            <Image
-              src="/fresh-ingredients-display.png"
-              alt="Fresh ingredients display"
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white">
-              <h3 className="text-base sm:text-lg font-bold">Farm Fresh Ingredients</h3>
-              <p className="text-xs sm:text-sm opacity-90">Locally sourced, daily delivered</p>
-            </div>
-          </div>
-
-          <div className="relative h-48 sm:h-64 rounded-lg overflow-hidden group">
-            <Image
-              src="/wine-cellar-selection.png"
-              alt="Wine cellar selection"
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white">
-              <h3 className="text-base sm:text-lg font-bold">Wine Cellar</h3>
-              <p className="text-xs sm:text-sm opacity-90">Curated selection of vintages</p>
-            </div>
+        <div className="bg-slate-800/50 rounded-xl p-6 sm:p-8 border border-slate-700">
+          <div className="text-center">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">The Bek Family Promise</h3>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl mx-auto">
+              We believe that great food brings people together. That's why we treat every order like we're 
+              cooking for our own family. From our kitchen to your table, we're committed to delivering 
+              the warmth, flavor, and comfort that only comes from true home cooking.
+            </p>
           </div>
         </div>
       </div>
@@ -327,14 +206,18 @@ function ContactSection() {
   return (
     <section className="relative py-12 sm:py-16 px-4 sm:px-6 overflow-hidden">
       <div className="absolute inset-0">
-        <Image src="/restaurant-entrance.png" alt="Restaurant entrance" fill className="object-cover opacity-20" />
+        <Image src="/restaurant-entrance.png" alt="House of Bek kitchen" fill className="object-cover opacity-20" />
       </div>
       <div className="absolute inset-0 bg-purple-600/80" />
 
       <div className="relative max-w-4xl mx-auto text-center text-white">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-6 sm:mb-8 px-4">
-          Ready to Experience the Future?
+          Taste the Difference Home Cooking Makes
         </h2>
+        <p className="text-base sm:text-lg mb-6 sm:mb-8 px-4 max-w-2xl mx-auto">
+          Ready to experience meals made with love? Order today and taste what generations 
+          of family cooking can bring to your table.
+        </p>
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-6 sm:mb-8 px-4">
           <div className="flex items-center gap-2 text-sm sm:text-base">
             <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -342,12 +225,19 @@ function ContactSection() {
           </div>
           <div className="flex items-center gap-2 text-sm sm:text-base">
             <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>123 Future Ave, Tech City</span>
+            <span>Serving Your Neighborhood</span>
           </div>
         </div>
-        <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-slate-100">
-          Get Started Today
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <Link href="/pickup">
+            <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-slate-100 w-full sm:w-auto">
+              Order Now
+            </Button>
+          </Link>
+          <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-purple-600 w-full sm:w-auto">
+            View Menu
+          </Button>
+        </div>
       </div>
     </section>
   )
@@ -358,7 +248,7 @@ export default function HomePage() {
     <main>
       <HeroSection />
       <ServicesPreview />
-      <RestaurantShowcase />
+      <OurStorySection />
       <ContactSection />
     </main>
   )
