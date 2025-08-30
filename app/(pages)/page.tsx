@@ -234,9 +234,11 @@ function ContactSection() {
               Order Now
             </Button>
           </Link>
+                    <Link href="/menu">
+
           <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-purple-600 w-full sm:w-auto">
             View Menu
-          </Button>
+          </Button></Link>
         </div>
       </div>
     </section>
